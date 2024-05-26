@@ -8,6 +8,7 @@
         class="px-4 mb-8"
       >
         <InputLabel
+          v-if="displayLabel(field)"
           :id="'field' + field.stage + index"
           :label="field.label"
           :required="field.required"
@@ -18,12 +19,29 @@
           v-slot="{ field: slotField }"
           :id="'field' + field.stage + index"
         >
-          <div v-if="field.type === 'text' || field.type === 'password'">
+          <div v-if="field.type === 'text' || field.type === 'password' || field.type === 'date'">
             <StringInput
               v-bind="slotField"
               v-model="formData['field' + field.stage + index]"
               :id="'field' + field.stage + index"
               :type="field.type"
+              :label="field.label"
+            />
+          </div>
+          <div v-if="field.type === 'select'">
+            <SelectInput
+              v-bind="slotField"
+              v-model="formData['field' + field.stage + index]"
+              :id="'field' + field.stage + index"
+              :label="field.label"
+              :options="field.options"
+            />
+          </div>
+          <div v-if="field.type === 'checkbox'">
+            <CheckboxInput 
+              v-bind="slotField"
+              v-model="formData['field' + field.stage + index]"
+              :id="'field' + field.stage + index"
               :label="field.label"
             />
           </div>
@@ -53,6 +71,8 @@ import { defineComponent, reactive } from 'vue'
 import PrimaryButton from './Buttons/PrimaryButton.vue'
 import InputLabel from './Inputs/InputLabel.vue'
 import StringInput from './Inputs/Input.vue'
+import SelectInput from './Inputs/SelectInput.vue'
+import CheckboxInput from './Inputs/CheckboxInput.vue'
 import { Field, Form as VeeForm, ErrorMessage } from 'vee-validate'
 import * as Yup from 'yup'
 
@@ -68,6 +88,8 @@ export default defineComponent({
     VeeForm,
     Field,
     ErrorMessage,
+    SelectInput,
+    CheckboxInput,
   },
 
   data() {
@@ -80,7 +102,7 @@ export default defineComponent({
 
   computed: {
     currentFields() {
-      return this.fields?.filter(f => f.stage === this.stage);
+      return this.fields.filter(f => f.stage === this.stage && this.shouldRenderField(f));
     },
 
     totalStages() {
@@ -110,7 +132,7 @@ export default defineComponent({
       return data;
     },
 
-    async onSubmit(e:any) {
+    async onSubmit(e) {
       try {
         await this.validationSchema.validate(this.formData, { abortEarly: false });
         e.preventDefault();
@@ -123,7 +145,19 @@ export default defineComponent({
       } catch (err) {
         this.showErrors = true;
       }
-    }
+    },
+
+    displayLabel(field) {
+      return field.type !== 'checkbox';
+    },
+
+    shouldRenderField(field) {
+      if (field.dependsOn === [] || field.dependsOn.length === 0) {
+        return true;
+      }
+      const dependFieldValue = this.formData['field' + field.dependsOn.stage + field.dependsOn.index];
+      return dependFieldValue !== undefined && field.dependsOn.value.toString() === dependFieldValue.toString()
+    },
   }
 })
 </script>
