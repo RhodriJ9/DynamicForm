@@ -1,15 +1,20 @@
 <template>
-  <div>
-    Register
+  <div class="w-full">
+    <DynamicFields :fields="fields" @completed="submit" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import Field from '@/classes/Field.js'
+import DynamicFields from '../DynamicFields.vue';
 import * as Yup from 'yup'
 
 export default defineComponent({
+  components: {
+    DynamicFields,
+  },
+
   computed: {
     fields() {
       // This can be received via API
@@ -19,6 +24,13 @@ export default defineComponent({
         new Field(0, 'Password', 'password', true, 'w-full', Yup.string().min(8, 'Password must be at least 8 characters').matches(/\d/, 'Password must contain at least one number').required('Password is required')),
       ];
     },
+  },
+
+  methods: {
+    submit(formData) {
+      console.log(formData)
+      alert('Muito obrigado!');
+    }
   }
 })
 </script>
