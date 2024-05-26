@@ -10,6 +10,7 @@ import Field from '@/classes/Field.js'
 import FieldDependancy from '@/classes/FieldDepandancy.ts'
 import SelectOption from '@/classes/SelectOption.js'
 import DynamicFields from '../DynamicFields.vue';
+import { useI18n } from 'vue-i18n';
 import * as Yup from 'yup'
 
 export default defineComponent({
@@ -17,26 +18,32 @@ export default defineComponent({
     DynamicFields,
   },
 
+  setup() {
+    const { t } = useI18n()
+
+    return { t }
+  },
+
   computed: {
     fields() {
       // This can be received via API
       return [
-        new Field(0, 'Name', 'text', true, 'w-full', Yup.string().required('Name is required').min(2, 'Name must be at least 2 characters')),
-        new Field(0, 'Email', 'text', true, 'w-full', Yup.string().email('Valid email is required').required('Email is required')),
-        new Field(0, 'Password', 'password', true, 'w-full', Yup.string().min(8, 'Password must be at least 8 characters').matches(/\d/, 'Password must contain at least one number').required('Password is required')),
-
-        new Field(1, 'Choice of Service', 'select', true, 'w-full', Yup.string().required('Choice of Service is required'), [
-          new SelectOption(0, 'Web Development'), 
-          new SelectOption(1, 'Mobile Development'),
-          new SelectOption(2, 'SEO Services'),
-          new SelectOption(3, 'Other'),
+        new Field(0, this.t('fields.name'), 'text', true, 'w-full', Yup.string().required(this.t('validation.required', { field: this.t('fields.name') })).min(2, this.t('validation.min', { field: this.t('fields.name'), min: 2 }))),
+        new Field(0, this.t('fields.email'), 'text', true, 'w-full', Yup.string().email(this.t('validation.email')).required(this.t('validation.required', { field: this.t('fields.email') }))),
+        new Field(0, this.t('fields.password'), 'password', true, 'w-full', Yup.string().min(8, this.t('validation.password.min', { min: 8 })).matches(/\d/, this.t('validation.password.matches')).required(this.t('validation.required', { field: this.t('fields.password') }))),
+        
+        new Field(1, this.t('fields.choiceOfService'), 'select', true, 'w-full', Yup.string().required(this.t('validation.required', { field: this.t('fields.choiceOfService') })), [
+          new SelectOption(0, this.t('fields.webDevelopment')), 
+          new SelectOption(1, this.t('fields.mobileDevelopment')),
+          new SelectOption(2, this.t('fields.seoServices')),
+          new SelectOption(3, this.t('fields.other')),
         ]),
-        new Field(1, 'Please specify other service', 'text', true, 'w-full', Yup.string().required('Please specify other service is required'), null, new FieldDependancy(0,3,'3')),
-        new Field(1, 'Date of Birth', 'date', true, 'w-full', Yup.date()
+        new Field(1, this.t('fields.specifyOtherService'), 'text', true, 'w-full', Yup.string().required(this.t('validation.required', { field: this.t('fields.specifyOtherService') })), null, new FieldDependancy(0,3,'3')),
+        new Field(1, this.t('fields.dateOfBirth'), 'date', true, 'w-full', Yup.date()
           .transform((value, originalValue) => (originalValue === '' ? null : value))
           .nullable()
-          .max(new Date(), 'Date of Birth must be a past date')),
-        new Field(1, 'I agree to the Terms & Conditions', 'checkbox', true, 'w-full', Yup.string().required('I agree to the Terms & Conditions is required')),
+          .max(new Date(), this.t('validation.maxDate', { field: this.t('fields.dateOfBirth') }))),
+        new Field(1, this.t('fields.termsAndConditions'), 'checkbox', true, 'w-full', Yup.string().required(this.t('validation.required', { field: this.t('fields.termsAndConditions') }))),
       ];
     },
   },
@@ -44,7 +51,7 @@ export default defineComponent({
   methods: {
     submit(formData) {
       console.log(formData)
-      alert('Muito obrigado!');
+      alert(this.t('thankYou'));
     }
   }
 })

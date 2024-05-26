@@ -58,7 +58,7 @@
 
     <div class="flex justify-end mx-8">
       <PrimaryButton 
-        :text="finalStage ? 'Submit' : 'Next'"
+        :text="finalStage ? this.t('submit') : this.t('next')"
         type="submit"
         @click="onSubmit"
     />
@@ -68,12 +68,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import PrimaryButton from './Buttons/PrimaryButton.vue'
-import InputLabel from './Inputs/InputLabel.vue'
-import StringInput from './Inputs/Input.vue'
-import SelectInput from './Inputs/SelectInput.vue'
-import CheckboxInput from './Inputs/CheckboxInput.vue'
+import PrimaryButton from './buttons/PrimaryButton.vue'
+import InputLabel from './inputs/InputLabel.vue'
+import StringInput from './inputs/Input.vue'
+import SelectInput from './inputs/SelectInput.vue'
+import CheckboxInput from './inputs/CheckboxInput.vue'
 import { Field, Form as VeeForm, ErrorMessage } from 'vee-validate'
+import { useI18n } from 'vue-i18n'
 import * as Yup from 'yup'
 
 export default defineComponent({
@@ -98,6 +99,12 @@ export default defineComponent({
       formData: reactive(this.createFormData()),
       showErrors: false,
     }
+  },
+
+  setup() {
+    const { t } = useI18n()
+
+    return { t }
   },
 
   computed: {
