@@ -46,11 +46,11 @@
             />
           </div>
         </Field>
-        <div class="ml-1 mt-1 -mb-4">
+        <div v-if="showErrors"  class="ml-1 mt-2 -mb-4 text-red-700 leading-none font-heading text-sm flex items-center">
+          <svg class="w-3 h-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
           <ErrorMessage 
-            v-if="showErrors" 
             :name="'field' + field.stage + index.toString()" 
-            class="text-red-700 leading-none font-heading text-sm" 
+            class="ml-2" 
           />
         </div>
       </div>
