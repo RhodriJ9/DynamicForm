@@ -1,6 +1,7 @@
 <template>
-  <div :id="id" class="font-heading text-sm font-bold capitalize">
-    {{ label }}
+  <div :id="id" class="font-heading text-sm font-bold">
+    <!-- We can render as HTML as it's not user generated -->
+    <span v-html="label"></span>
   </div>
 </template>
 

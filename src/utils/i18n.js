@@ -9,7 +9,8 @@ const messages = {
       choiceOfService: 'Choice of Service',
       specifyOtherService: 'Please specify other service',
       dateOfBirth: 'Date of Birth',
-      termsAndConditions: 'I agree to the Terms & Conditions',
+      termsAndConditions:
+        'I agree to the <a href="https://upmind.com/terms" target="_blank" class="text-blue-500">Terms & Conditions</a>',
       webDevelopment: 'Web Development',
       mobileDevelopment: 'Mobile Development',
       seoServices: 'SEO Services',
