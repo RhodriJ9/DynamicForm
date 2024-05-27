@@ -1,6 +1,6 @@
 # Upmind Technical Test Documentation
 
-The focus is on structuring and managing the form's functionality to ensure it is responsive, scalable, and maintainable.
+The focus is on structuring and managing the form's functionality to ensure it is responsive, scalable, and maintainable with a test-driven approach.
 
 ## Assumptions
 

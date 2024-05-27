@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref } from 'vue'
+import { defineComponent } from 'vue'
 import InputLabel from './InputLabel.vue'
 
 export default defineComponent({
@@ -39,22 +39,5 @@ export default defineComponent({
   components: {
     InputLabel
   },
-
-  // setup(props, { emit }) {
-  //   const internalValue = ref(props.modelValue)
-
-  //   watch(() => props.modelValue, (newValue) => {
-  //     internalValue.value = newValue
-  //   })
-
-  //   const updateValue = (event:any) => {
-  //     emit('update:modelValue', event.target.value)
-  //   }
-
-  //   return {
-  //     internalValue,
-  //     updateValue
-  //   }
-  // }
 })
 </script>

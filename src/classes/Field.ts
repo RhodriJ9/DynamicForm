@@ -1,5 +1,5 @@
-import SelectOption from './SelectOption.ts'
-import FieldDependancy from './FieldDepandancy.ts'
+import SelectOption from './SelectOption'
+import FieldDependancy from './FieldDepandancy'
 
 class Field {
   stage: number
@@ -10,7 +10,7 @@ class Field {
   width: string
   validation: any
   options: SelectOption[]
-  dependsOn: FieldDependancy[]
+  dependsOn: FieldDependancy
 
   constructor(
     stage: number,
@@ -21,7 +21,7 @@ class Field {
     width: string,
     validation: any,
     options: SelectOption[] = [],
-    dependsOn: FieldDependancy[] = []
+    dependsOn: any = null
   ) {
     this.stage = stage
     this.identifier = identifier

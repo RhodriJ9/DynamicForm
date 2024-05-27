@@ -69,7 +69,7 @@
     <div class="flex justify-end space-x-2 mx-4">
       <SecondaryButton v-if="stage > 0" type="button" text="Back" @click="back" />
       <PrimaryButton
-        :text="finalStage ? this.t('submit') : this.t('next')"
+        :text="finalStage ? t('submit') : t('next')"
         type="submit"
         @click="onSubmit"
       />
@@ -78,13 +78,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, type PropType } from 'vue'
 import PrimaryButton from './buttons/PrimaryButton.vue'
 import SecondaryButton from './buttons/SecondaryButton.vue'
 import InputLabel from './inputs/InputLabel.vue'
 import StringInput from './inputs/Input.vue'
 import SelectInput from './inputs/SelectInput.vue'
 import CheckboxInput from './inputs/CheckboxInput.vue'
+import FieldClass from '@/classes/Field.js'
 import { Field, Form as VeeForm, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
 import * as Yup from 'yup'
@@ -92,7 +93,7 @@ import * as Yup from 'yup'
 export default defineComponent({
   props: {
     fields: {
-      type: Array,
+      type: Array as PropType<FieldClass[]>,
       required: true
     }
   },
@@ -159,7 +160,7 @@ export default defineComponent({
       return data
     },
 
-    async onSubmit(e) {
+    async onSubmit(e:any) {
       try {
         await this.validationSchema.validate(this.formData, { abortEarly: false })
         e.preventDefault()
@@ -174,12 +175,12 @@ export default defineComponent({
       }
     },
 
-    displayLabel(field) {
+    displayLabel(field:FieldClass) {
       return field.type !== 'checkbox'
     },
 
-    shouldRenderField(field) {
-      if (field.dependsOn.length === 0) {
+    shouldRenderField(field:FieldClass) {
+      if (field.dependsOn === null) {
         return true
       }
       const dependFieldValue =

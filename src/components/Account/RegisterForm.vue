@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Field from '@/classes/Field.js'
-import FieldDependancy from '@/classes/FieldDepandancy.ts'
+import FieldDependancy from '@/classes/FieldDepandancy'
 import SelectOption from '@/classes/SelectOption.js'
 import DynamicFields from '../DynamicFields.vue'
 import { useI18n } from 'vue-i18n'
@@ -97,7 +97,7 @@ export default defineComponent({
           true,
           'w-full',
           this.validation.specifyOtherService,
-          null,
+          [],
           new FieldDependancy('choiceOfService', '3')
         ),
         new Field(
@@ -123,7 +123,7 @@ export default defineComponent({
   },
 
   methods: {
-    submit(formData) {
+    submit(formData:any) {
       console.log(formData)
       alert(this.t('thankYou'))
     },
