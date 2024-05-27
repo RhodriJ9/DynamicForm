@@ -3,6 +3,7 @@
     <input
       :id="id"
       type="checkbox"
+      :checked="value"
       @change="$emit('update:modelValue', $event.target.checked)"
       :aria-label="label"
       class="font-heading h-4 w-4 rounded border border-gray-300 bg-gray-50 text-blue-600 transition-all duration-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -12,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import InputLabel from './InputLabel.vue'
 
 export default defineComponent({
@@ -25,14 +26,35 @@ export default defineComponent({
       type: String,
       default: ''
     },
+    value: {
+      type: Boolean,
+      default: false
+    },
     modelValue: {
       type: Boolean,
       default: false
     }
   },
-  emits: ['update:modelValue'],
+
   components: {
     InputLabel
-  }
+  },
+
+  // setup(props, { emit }) {
+  //   const internalValue = ref(props.modelValue)
+
+  //   watch(() => props.modelValue, (newValue) => {
+  //     internalValue.value = newValue
+  //   })
+
+  //   const updateValue = (event:any) => {
+  //     emit('update:modelValue', event.target.value)
+  //   }
+
+  //   return {
+  //     internalValue,
+  //     updateValue
+  //   }
+  // }
 })
 </script>

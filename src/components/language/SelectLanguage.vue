@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center space-x-2">
+  <div class="flex items-center space-x-2 select-none">
     <div class="cursor-pointer" @click="changeLocale('en')">
       <svg
         xmlns="http://www.w3.org/2000/svg"

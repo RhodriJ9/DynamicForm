@@ -1,11 +1,9 @@
 class FieldDependancy {
-  stage: number
-  index: number
-  value: number
+  identifier: string
+  value: string
 
-  constructor(stage: number, index: number, value: number) {
-    this.stage = stage
-    this.index = index
+  constructor(identifier: string, value: string) {
+    this.identifier = identifier
     this.value = value
   }
 }

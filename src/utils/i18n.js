@@ -18,6 +18,7 @@ const messages = {
     },
     validation: {
       required: '{field} is required',
+      tcsRequired: 'Terms & Conditions must be accepted',
       min: '{field} must be at least {min} characters',
       email: 'Valid email is required',
       password: {
@@ -46,6 +47,7 @@ const messages = {
     },
     validation: {
       required: '{field} é obrigatório',
+      tcsRequired: 'Termos e Condições devem ser aceitos',
       min: '{field} deve ter pelo menos {min} caracteres',
       email: 'Um email válido é obrigatório',
       password: {

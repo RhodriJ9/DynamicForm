@@ -3,6 +3,7 @@ import FieldDependancy from './FieldDepandancy.ts'
 
 class Field {
   stage: number
+  identifier: string
   label: string
   type: string
   required: boolean
@@ -13,6 +14,7 @@ class Field {
 
   constructor(
     stage: number,
+    identifier: string,
     label: string,
     type: string,
     required: boolean,
@@ -22,6 +24,7 @@ class Field {
     dependsOn: FieldDependancy[] = []
   ) {
     this.stage = stage
+    this.identifier = identifier
     this.label = label
     this.type = type
     this.required = required

@@ -10,10 +10,7 @@
         </div>
       </div>
       <div class="bg-white rounded-lg p-7 px-5 shadow">
-        <RegisterForm 
-          class="max-w-lg"
-          @stage="setStage"
-        />
+        <RegisterForm class="max-w-lg" @stage="setStage" />
       </div>
       <div class="flex justify-center mt-4">
         <SelectLanguage />
@@ -37,15 +34,15 @@ export default defineComponent({
 
   data() {
     return {
-      stage: 0,
+      stage: 0
     }
   },
 
   computed: {
     title() {
-      if(this.stage === 0) {
+      if (this.stage === 0) {
         return 'Create an account'
-      } else if(this.stage === 1) {
+      } else if (this.stage === 1) {
         return 'Nearly there'
       }
 
@@ -53,19 +50,19 @@ export default defineComponent({
     },
 
     subtitle() {
-      if(this.stage === 0) {
+      if (this.stage === 0) {
         return 'Please enter your account details'
-      } else if(this.stage === 1) {
+      } else if (this.stage === 1) {
         return 'We just need a few more details'
       }
-      
+
       return ''
-    },
+    }
   },
 
   methods: {
-    setStage(stage:number) {
-      this.stage = stage;
+    setStage(stage: number) {
+      this.stage = stage
     }
   }
 })

@@ -26,7 +26,7 @@ export default defineComponent({
 
   data() {
     return {
-      stage: 0,
+      stage: 0
     }
   },
 
@@ -53,19 +53,20 @@ export default defineComponent({
           .transform((value, originalValue) => (originalValue === '' ? null : value))
           .nullable()
           .max(new Date(), this.t('validation.maxDate', { field: this.t('fields.dateOfBirth') })),
-        termsAndConditions: Yup.string().required(
-          this.t('validation.required', { field: this.t('fields.termsAndConditions') })
-        )
+          termsAndConditions: Yup.boolean()
+          .oneOf([true], this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') }))
+          .required(this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') }))
       }
     },
 
     fields() {
       // This can be received via API
       return [
-        new Field(0, this.t('fields.name'), 'text', true, 'w-full', this.validation.name),
-        new Field(0, this.t('fields.email'), 'text', true, 'w-full', this.validation.email),
+        new Field(0, 'name', this.t('fields.name'), 'text', true, 'w-full', this.validation.name),
+        new Field(0, 'email', this.t('fields.email'), 'text', true, 'w-full', this.validation.email),
         new Field(
           0,
+          'password',
           this.t('fields.password'),
           'password',
           true,
@@ -75,6 +76,7 @@ export default defineComponent({
 
         new Field(
           1,
+          'choiceOfService',
           this.t('fields.choiceOfService'),
           'select',
           true,
@@ -89,16 +91,18 @@ export default defineComponent({
         ),
         new Field(
           1,
+          'specifyOtherService',
           this.t('fields.specifyOtherService'),
           'text',
           true,
           'w-full',
           this.validation.specifyOtherService,
           null,
-          new FieldDependancy(0, 3, '3')
+          new FieldDependancy('choiceOfService', '3')
         ),
         new Field(
           1,
+          'dateOfBirth',
           this.t('fields.dateOfBirth'),
           'date',
           true,
@@ -107,6 +111,7 @@ export default defineComponent({
         ),
         new Field(
           1,
+          'termsAndConditions',
           this.t('fields.termsAndConditions'),
           'checkbox',
           true,
@@ -114,7 +119,7 @@ export default defineComponent({
           this.validation.termsAndConditions
         )
       ]
-    }
+    },
   },
 
   methods: {
@@ -123,9 +128,9 @@ export default defineComponent({
       alert(this.t('thankYou'))
     },
 
-    setStage(stage:number) {
-      this.stage = stage;
-      this.$emit('stage', stage);
+    setStage(stage: number) {
+      this.stage = stage
+      this.$emit('stage', stage)
     }
   }
 })

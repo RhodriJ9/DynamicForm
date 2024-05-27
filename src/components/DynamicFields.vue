@@ -1,38 +1,39 @@
 <template>
   <VeeForm :validation-schema="validationSchema" class="w-full" @submit="onSubmit">
-    <div class="flex flex-wrap justify-center w-full -mr-4">
+    <div class="flex flex-wrap w-full -mr-4">
       <div
-        v-for="(field, index) in currentFields"
-        :key="'field' + field.stage + index"
+        v-for="field in currentFields"
+        :key="field.identifier"
         :class="field.width"
         class="mb-8 px-4"
       >
         <InputLabel
           v-if="displayLabel(field)"
-          :id="'field' + field.stage + index"
+          :id="field.identifier"
           :label="field.label"
           :required="field.required"
           class="mb-2 ml-1"
         />
         <Field
-          :name="'field' + field.stage + index.toString()"
-          v-slot="{ field: slotField }"
-          :id="'field' + field.stage + index"
+          :name="field.identifier"
+          v-slot="{ field: slotField, errors }"
+          :id="field.identifier"
         >
           <div v-if="field.type === 'text' || field.type === 'password' || field.type === 'date'">
             <StringInput
               v-bind="slotField"
-              v-model="formData['field' + field.stage + index]"
-              :id="'field' + field.stage + index"
+              v-model="formData[field.identifier]"
+              :id="field.identifier"
               :type="field.type"
               :label="field.label"
+              :value="formData[field.identifier]"
             />
           </div>
           <div v-if="field.type === 'select'">
             <SelectInput
               v-bind="slotField"
-              v-model="formData['field' + field.stage + index]"
-              :id="'field' + field.stage + index"
+              v-model="formData[field.identifier]"
+              :id="field.identifier"
               :label="field.label"
               :options="field.options"
             />
@@ -40,32 +41,33 @@
           <div v-if="field.type === 'checkbox'">
             <CheckboxInput
               v-bind="slotField"
-              v-model="formData['field' + field.stage + index]"
-              :id="'field' + field.stage + index"
+              v-model="formData[field.identifier]"
+              :value="formData[field.identifier]"
+              :id="field.identifier"
               :label="field.label"
             />
           </div>
-        </Field>
-        <div
-          v-if="showErrors"
-          class="ml-1 mt-2 -mb-4 text-red-700 leading-none font-heading text-sm flex items-center"
-        >
-          <svg
-            class="w-3 h-3 fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
+          <div
+            v-if="showErrors && errors.length > 0 && !errors[0].includes('boolean')"
+            class="ml-1 mt-2 -mb-4 text-red-700 leading-none font-heading text-sm flex items-center"
           >
-            <path
-              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
-            />
-          </svg>
-          <ErrorMessage :name="'field' + field.stage + index.toString()" class="ml-2" />
-        </div>
+            <svg
+              class="w-3 h-3 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
+              />
+            </svg>
+            <ErrorMessage :name="field.identifier" class="ml-2" />
+          </div>
+        </Field>
       </div>
     </div>
 
     <div class="flex justify-end space-x-2 mx-4">
-      <SecondaryButton type="button" text="Back" />
+      <SecondaryButton v-if="stage > 0" type="button" text="Back" @click="back" />
       <PrimaryButton
         :text="finalStage ? this.t('submit') : this.t('next')"
         type="submit"
@@ -89,7 +91,10 @@ import * as Yup from 'yup'
 
 export default defineComponent({
   props: {
-    fields: Array
+    fields: {
+      type: Array,
+      required: true
+    }
   },
 
   components: {
@@ -133,8 +138,8 @@ export default defineComponent({
 
     validationSchema() {
       const data = {}
-      this.currentFields.forEach((field, index) => {
-        data['field' + field.stage + index] = field.validation
+      this.currentFields.forEach((field) => {
+        data[field.identifier] = field.validation
       })
 
       return Yup.object().shape(data)
@@ -144,8 +149,12 @@ export default defineComponent({
   methods: {
     createFormData() {
       const data = {}
-      this.fields?.forEach((field, index) => {
-        data['field' + field.stage + index] = ''
+      this.fields?.forEach((field) => {
+        if(field.type === 'checkbox') {
+          data[field.identifier] = false
+        } else {
+          data[field.identifier] = ''
+        }
       })
       return data
     },
@@ -155,8 +164,7 @@ export default defineComponent({
         await this.validationSchema.validate(this.formData, { abortEarly: false })
         e.preventDefault()
         if (!this.finalStage) {
-          this.stage++
-          this.$emit('stage', this.stage)
+          this.next()
         } else {
           this.$emit('completed', this.formData)
         }
@@ -171,15 +179,29 @@ export default defineComponent({
     },
 
     shouldRenderField(field) {
-      if (field.dependsOn === [] || field.dependsOn.length === 0) {
+      if (field.dependsOn.length === 0) {
         return true
       }
       const dependFieldValue =
-        this.formData['field' + field.dependsOn.stage + field.dependsOn.index]
+        this.formData[field.dependsOn.identifier]
       return (
         dependFieldValue !== undefined &&
         field.dependsOn.value.toString() === dependFieldValue.toString()
       )
+    },
+
+    next() {
+      if (!this.finalStage) {
+        this.stage++
+        this.$emit('stage', this.stage)
+      }
+    },
+
+    back() {
+      if (this.stage > 0) {
+        this.stage--
+        this.$emit('stage', this.stage)
+      }
     }
   }
 })
