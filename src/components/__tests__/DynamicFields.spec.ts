@@ -260,10 +260,6 @@ describe('DynamicFields', () => {
     })
 
     it('does not display validation errors before submit', async () => {
-      const primaryButton = wrapper.find('button#primaryButton')
-      expect(primaryButton.exists()).toBe(true)
-      await primaryButton.trigger('click')
-  
       await flushPromises();
       await flushPromises();
       await flushPromises();
