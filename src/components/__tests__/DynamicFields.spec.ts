@@ -1,13 +1,9 @@
-import { describe, it, beforeEach, vi, expect, beforeAll } from 'vitest'
-import { required } from '@vee-validate/rules'
-import { flushPromises } from '@vue/test-utils'
+import { describe, it, beforeEach, expect, } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createApp } from 'vue'
 import DynamicFields from '@/components/DynamicFields.vue'
 import i18n from '@/utils/i18n'
 import { fieldsSimple, fieldsStages, fieldsHidden, singleStage } from './DynamicFieldsExamples'
-import { nextTick } from 'vue'
-import { defineRule, configure } from 'vee-validate'
 
 describe('DynamicFields', () => {
   describe('Fields', () => {
