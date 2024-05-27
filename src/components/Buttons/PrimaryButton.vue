@@ -15,11 +15,11 @@ export default defineComponent({
     text: {
       type: String,
       default: ''
-    },  
+    },
     type: {
       type: String,
       default: ''
-    },
-  },
+    }
+  }
 })
 </script>

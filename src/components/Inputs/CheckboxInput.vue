@@ -9,7 +9,6 @@
     />
     <InputLabel class="ml-3" :label="label" />
   </div>
-
 </template>
 
 <script lang="ts">
@@ -33,7 +32,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   components: {
-    InputLabel,
-  },
+    InputLabel
+  }
 })
 </script>

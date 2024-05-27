@@ -1,7 +1,8 @@
 <template>
   <div class="flex h-screen w-full">
-
-    <div class="w-5/12 flex items-center justify-center h-full bg-gradient-to-bl from-blue-500 to-blue-800 shadow z-10">
+    <div
+      class="w-5/12 flex items-center justify-center h-full bg-gradient-to-bl from-blue-500 to-blue-800 shadow z-10"
+    >
       <div>
         <slot name="MainContent" />
       </div>
