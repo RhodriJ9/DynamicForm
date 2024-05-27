@@ -4,7 +4,7 @@ import FieldDependancy from './FieldDepandancy.ts'
 class Field {
   stage: number
   label: string
-  type: number
+  type: string
   required: boolean
   width: string
   validation: any
@@ -14,7 +14,7 @@ class Field {
   constructor(
     stage: number,
     label: string,
-    type: number,
+    type: string,
     required: boolean,
     width: string,
     validation: any,

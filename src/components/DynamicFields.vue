@@ -1,11 +1,11 @@
 <template>
     <VeeForm :validation-schema="validationSchema" class="w-full" @submit="onSubmit">
-    <div class="flex flex-wrap w-full -mx-4">
+    <div class="flex flex-wrap w-full -mr-4">
       <div
         v-for="(field, index) in currentFields"
         :key="'field' + field.stage + index"
         :class="field.width"
-        class="px-4 mb-8"
+        class="mb-8 px-4"
       >
         <InputLabel
           v-if="displayLabel(field)"
@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <div class="flex justify-end mx-8">
+    <div class="flex justify-end mx-4">
       <PrimaryButton 
         :text="finalStage ? this.t('submit') : this.t('next')"
         type="submit"
