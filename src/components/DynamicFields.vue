@@ -156,6 +156,7 @@ export default defineComponent({
         e.preventDefault()
         if (!this.finalStage) {
           this.stage++
+          this.$emit('stage', this.stage)
         } else {
           this.$emit('completed', this.formData)
         }

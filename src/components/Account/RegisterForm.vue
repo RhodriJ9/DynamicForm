@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <DynamicFields :fields="fields" @completed="submit" />
+    <DynamicFields :fields="fields" @completed="submit" @stage="setStage" />
   </div>
 </template>
 
@@ -121,6 +121,11 @@ export default defineComponent({
     submit(formData) {
       console.log(formData)
       alert(this.t('thankYou'))
+    },
+
+    setStage(stage:number) {
+      this.stage = stage;
+      this.$emit('stage', stage);
     }
   }
 })
