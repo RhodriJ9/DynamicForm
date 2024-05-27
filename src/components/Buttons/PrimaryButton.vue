@@ -1,5 +1,6 @@
 <template>
   <button
+    id="primaryButton"
     :type="type"
     class="font-heading bg-blue-600 hover:bg-blue-500 focus:ring-2 select-none focus:ring-blue-300 focus:outline-none rounded-full px-5 py-4 text-white text-sm leading-none cursor-pointer transition-all duration-300"
   >
