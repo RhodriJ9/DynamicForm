@@ -31,6 +31,10 @@ Internationalization will be provided at the highest-level during the field defi
 
 - Responsive design that provides a good user experience on mobile
 
+## Known Bugs
+
+- Validation message for checkboxes break after deselecting. Yup sees the value is being set as 'on', even though the value is true in formData. Form validation is functioning as it should, but ideally the error message should re-appear.
+
 ## Setting up the Project
 
 ### 1. Install the dependancies
