@@ -64,7 +64,8 @@
       </div>
     </div>
 
-    <div class="flex justify-end mx-4">
+    <div class="flex justify-end space-x-2 mx-4">
+      <SecondaryButton type="button" text="Back" />
       <PrimaryButton
         :text="finalStage ? this.t('submit') : this.t('next')"
         type="submit"
@@ -77,6 +78,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import PrimaryButton from './buttons/PrimaryButton.vue'
+import SecondaryButton from './buttons/SecondaryButton.vue'
 import InputLabel from './inputs/InputLabel.vue'
 import StringInput from './inputs/Input.vue'
 import SelectInput from './inputs/SelectInput.vue'
@@ -92,6 +94,7 @@ export default defineComponent({
 
   components: {
     PrimaryButton,
+    SecondaryButton,
     InputLabel,
     StringInput,
     VeeForm,
