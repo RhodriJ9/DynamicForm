@@ -1,4 +1,4 @@
-import { describe, it, beforeEach, expect, } from 'vitest'
+import { describe, it, beforeEach, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createApp } from 'vue'
 import DynamicFields from '@/components/DynamicFields.vue'
