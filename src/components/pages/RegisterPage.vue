@@ -1,19 +1,21 @@
 <template>
   <SplitPage>
     <template #MainContent>
-      <div class="text-center mb-12 -mt-24">
-        <div class="text-white text-3xl font-bold">
-          {{ title }}
+      <div>
+        <div class="text-center mb-12">
+          <div class="text-gray-900 md:text-white text-3xl font-bold">
+            {{ title }}
+          </div>
+          <div class="text-gray-900 md:text-white opacity-80 text-lg mt-2">
+            {{ subtitle }}
+          </div>
         </div>
-        <div class="text-white opacity-80 text-lg mt-2">
-          {{ subtitle }}
+        <div class="bg-white rounded-lg p-7 px-5 md:shadow">
+          <RegisterForm class="max-w-lg" @stage="setStage" />
         </div>
-      </div>
-      <div class="bg-white rounded-lg p-7 px-5 shadow">
-        <RegisterForm class="max-w-lg" @stage="setStage" />
-      </div>
-      <div class="flex justify-center mt-4">
-        <SelectLanguage />
+        <div class="flex justify-center mt-4">
+          <SelectLanguage />
+        </div>
       </div>
     </template>
   </SplitPage>

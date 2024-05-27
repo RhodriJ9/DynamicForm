@@ -29,6 +29,8 @@ Internationalization will be provided at the highest-level during the field defi
 
 - The field label is rendered as HTML. This should be avoided where possible, but as the labels are not user-generated XSS attack should not be possible and this will allow us to render links into the label. A use case for this would be linked to the T&Cs from a checkbox.
 
+- Responsive design that provides a good user experience on mobile
+
 ## Setting up the Project
 
 ### 1. Install the dependancies
