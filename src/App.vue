@@ -1,27 +1,14 @@
 <template>
-  <SplitPage>
-    <template #MainContent>
-      <div class="bg-white rounded-lg p-7 px-5 shadow">
-        <RegisterForm class="max-w-lg" />
-      </div>
-      <div class="flex justify-center">
-        <SelectLanguage />
-      </div>
-    </template>
-  </SplitPage>
+  <RegisterPage />
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import SplitPage from './components/pages/SplitPage.vue'
-import RegisterForm from './components/account/RegisterForm.vue'
-import SelectLanguage from './components/language/SelectLanguage.vue'
+import RegisterPage from './components/pages/RegisterPage.vue'
 
 export default defineComponent({
   components: {
-    RegisterForm,
-    SelectLanguage,
-    SplitPage
+    RegisterPage
   }
 })
 </script>
