@@ -1,5 +1,5 @@
 import { describe, it, beforeEach, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createApp } from 'vue'
 import DynamicFields from '@/components/DynamicFields.vue'
 import i18n from '@/utils/i18n'
@@ -231,23 +231,44 @@ describe('DynamicFields', () => {
     })
   })
 
-  // describe('Validation', () => {
-  //   let wrapper
+  describe('Validation', () => {
+    let wrapper
 
-  //   beforeEach(() => {
-  //     const app = createApp({})
-  //     app.use(i18n)
+    beforeEach(() => {
+      const app = createApp({})
+      app.use(i18n)
 
-  //     wrapper = mount(DynamicFields, {
-  //       props: { fields: singleStage },
-  //       global: {
-  //         plugins: [i18n]
-  //       }
-  //     })
-  //   })
+      wrapper = mount(DynamicFields, {
+        props: { fields: singleStage },
+        global: {
+          plugins: [i18n]
+        }
+      })
+      })
 
-  // it('displays validation errors on submit', async () => {})
+    it('displays validation errors on submit', async () => {
+      const primaryButton = wrapper.find('button#primaryButton')
+      expect(primaryButton.exists()).toBe(true)
+      await primaryButton.trigger('click')
+      
+      // Only passes when you flush promises 3 times
+      await flushPromises();
+      await flushPromises();
+      await flushPromises();
 
-  // it('does not display validation errors before submit', () => {})
-  // })
+      expect(wrapper.html()).toContain('Name is required');
+    })
+
+    it('does not display validation errors before submit', async () => {
+      const primaryButton = wrapper.find('button#primaryButton')
+      expect(primaryButton.exists()).toBe(true)
+      await primaryButton.trigger('click')
+  
+      await flushPromises();
+      await flushPromises();
+      await flushPromises();
+  
+      expect(wrapper.html()).not.toContain('Name is required')
+    })
+  })
 })
