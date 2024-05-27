@@ -2,6 +2,16 @@ import { createI18n } from 'vue-i18n'
 
 const messages = {
   en: {
+    register: {
+      stage1: {
+        title: 'Create an account',
+        description: 'Please enter your account details'
+      },
+      stage2: {
+        title: 'Nearly there',
+        description: 'We just need a few more details'
+      }
+    },
     fields: {
       name: 'Name',
       email: 'Email',
@@ -32,6 +42,16 @@ const messages = {
     thankYou: 'Thank you for your submission.'
   },
   pt: {
+    register: {
+      stage1: {
+        title: 'Criar uma conta',
+        description: 'Por favor, insira os detalhes da sua conta'
+      },
+      stage2: {
+        title: 'Quase lá',
+        description: 'Só precisamos de mais alguns detalhes'
+      }
+    },
     fields: {
       name: 'Nome',
       email: 'Email',

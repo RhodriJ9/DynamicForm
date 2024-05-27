@@ -24,6 +24,7 @@ import { defineComponent } from 'vue'
 import SplitPage from '@/components/layouts/SplitPage.vue'
 import RegisterForm from '@/components/account/RegisterForm.vue'
 import SelectLanguage from '@/components/language/SelectLanguage.vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   components: {
@@ -31,6 +32,13 @@ export default defineComponent({
     SelectLanguage,
     SplitPage
   },
+
+  setup() {
+    const { t } = useI18n()
+
+    return { t }
+  },
+
 
   data() {
     return {
@@ -41,9 +49,9 @@ export default defineComponent({
   computed: {
     title() {
       if (this.stage === 0) {
-        return 'Create an account'
+        return this.t('register.stage1.title')
       } else if (this.stage === 1) {
-        return 'Nearly there'
+        return this.t('register.stage2.title')
       }
 
       return ''
@@ -51,9 +59,9 @@ export default defineComponent({
 
     subtitle() {
       if (this.stage === 0) {
-        return 'Please enter your account details'
+        return this.t('register.stage1.description')
       } else if (this.stage === 1) {
-        return 'We just need a few more details'
+        return this.t('register.stage2.description')
       }
 
       return ''
