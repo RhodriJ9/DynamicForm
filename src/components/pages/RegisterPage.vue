@@ -39,7 +39,6 @@ export default defineComponent({
     return { t }
   },
 
-
   data() {
     return {
       stage: 0

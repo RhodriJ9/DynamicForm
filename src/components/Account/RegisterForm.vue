@@ -53,9 +53,14 @@ export default defineComponent({
           .transform((value, originalValue) => (originalValue === '' ? null : value))
           .nullable()
           .max(new Date(), this.t('validation.maxDate', { field: this.t('fields.dateOfBirth') })),
-          termsAndConditions: Yup.boolean()
-          .oneOf([true], this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') }))
-          .required(this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') }))
+        termsAndConditions: Yup.boolean()
+          .oneOf(
+            [true],
+            this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') })
+          )
+          .required(
+            this.t('validation.tcsRequired', { field: this.t('fields.termsAndConditions') })
+          )
       }
     },
 
@@ -63,7 +68,15 @@ export default defineComponent({
       // This can be received via API
       return [
         new Field(0, 'name', this.t('fields.name'), 'text', true, 'w-full', this.validation.name),
-        new Field(0, 'email', this.t('fields.email'), 'text', true, 'w-full', this.validation.email),
+        new Field(
+          0,
+          'email',
+          this.t('fields.email'),
+          'text',
+          true,
+          'w-full',
+          this.validation.email
+        ),
         new Field(
           0,
           'password',
@@ -119,11 +132,11 @@ export default defineComponent({
           this.validation.termsAndConditions
         )
       ]
-    },
+    }
   },
 
   methods: {
-    submit(formData:any) {
+    submit(formData: any) {
       console.log(formData)
       alert(this.t('thankYou'))
     },

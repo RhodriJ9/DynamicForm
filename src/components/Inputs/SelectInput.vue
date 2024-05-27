@@ -38,11 +38,14 @@ export default defineComponent({
   setup(props, { emit }) {
     const internalValue = ref(props.modelValue)
 
-    watch(() => props.modelValue, (newValue) => {
-      internalValue.value = newValue
-    })
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        internalValue.value = newValue
+      }
+    )
 
-    const updateValue = (event:any) => {
+    const updateValue = (event: any) => {
       emit('update:modelValue', event.target.value)
     }
 

@@ -68,11 +68,7 @@
 
     <div class="flex justify-end space-x-2 mx-4">
       <SecondaryButton v-if="stage > 0" type="button" text="Back" @click="back" />
-      <PrimaryButton
-        :text="finalStage ? t('submit') : t('next')"
-        type="submit"
-        @click="onSubmit"
-      />
+      <PrimaryButton :text="finalStage ? t('submit') : t('next')" type="submit" @click="onSubmit" />
     </div>
   </VeeForm>
 </template>
@@ -82,7 +78,7 @@ import { defineComponent, reactive, type PropType } from 'vue'
 import PrimaryButton from './buttons/PrimaryButton.vue'
 import SecondaryButton from './buttons/SecondaryButton.vue'
 import InputLabel from './inputs/InputLabel.vue'
-import StringInput from './inputs/Input.vue'
+import StringInput from './inputs/StringInput.vue'
 import SelectInput from './inputs/SelectInput.vue'
 import CheckboxInput from './inputs/CheckboxInput.vue'
 import FieldClass from '@/classes/Field.js'
@@ -151,7 +147,7 @@ export default defineComponent({
     createFormData() {
       const data = {}
       this.fields?.forEach((field) => {
-        if(field.type === 'checkbox') {
+        if (field.type === 'checkbox') {
           data[field.identifier] = false
         } else {
           data[field.identifier] = ''
@@ -160,7 +156,7 @@ export default defineComponent({
       return data
     },
 
-    async onSubmit(e:any) {
+    async onSubmit(e: any) {
       try {
         await this.validationSchema.validate(this.formData, { abortEarly: false })
         e.preventDefault()
@@ -175,16 +171,15 @@ export default defineComponent({
       }
     },
 
-    displayLabel(field:FieldClass) {
+    displayLabel(field: FieldClass) {
       return field.type !== 'checkbox'
     },
 
-    shouldRenderField(field:FieldClass) {
+    shouldRenderField(field: FieldClass) {
       if (field.dependsOn === null) {
         return true
       }
-      const dependFieldValue =
-        this.formData[field.dependsOn.identifier]
+      const dependFieldValue = this.formData[field.dependsOn.identifier]
       return (
         dependFieldValue !== undefined &&
         field.dependsOn.value.toString() === dependFieldValue.toString()
