@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center space-x-2 select-none">
-    <div class="cursor-pointer" @click="changeLocale('en')">
+    <button id="enButton" class="cursor-pointer" @click="changeLocale('en')">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="w-10 h-10"
@@ -22,13 +22,13 @@
           <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
         </g>
       </svg>
-    </div>
-    <div class="cursor-pointer" @click="changeLocale('pt')">
+    </button>
+    <button id="ptButton" class="cursor-pointer" @click="changeLocale('pt')">
       <img
         class="h-6"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/900px-Flag_of_Portugal.svg.png?20210806190400"
       />
-    </div>
+    </button>
   </div>
 </template>
 

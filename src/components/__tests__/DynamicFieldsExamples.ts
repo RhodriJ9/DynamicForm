@@ -93,4 +93,25 @@ const fieldsHidden = [
   )
 ]
 
-export { fieldsSimple, fieldsStages, fieldsHidden }
+const singleStage = [
+  new FieldClass(
+    0,
+    'name',
+    'Name',
+    'text',
+    true,
+    'w-full',
+    yup.string().required('Name is required').min(2, 'Name must be at least 2 characters')
+  ),
+  new FieldClass(
+    1,
+    'name2',
+    'Name2',
+    'text',
+    true,
+    'w-full',
+    yup.string().required('Name is required').min(2, 'Name must be at least 2 characters')
+  )
+]
+
+export { fieldsSimple, fieldsStages, fieldsHidden, singleStage }

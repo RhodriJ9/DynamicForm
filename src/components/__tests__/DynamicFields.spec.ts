@@ -1,9 +1,13 @@
-import { describe, it, beforeEach, vi, expect } from 'vitest'
+import { describe, it, beforeEach, vi, expect, beforeAll } from 'vitest'
+import { required } from '@vee-validate/rules'
+import { flushPromises } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createApp } from 'vue'
 import DynamicFields from '@/components/DynamicFields.vue'
 import i18n from '@/utils/i18n'
-import { fieldsSimple, fieldsStages, fieldsHidden } from './DynamicFieldsExamples'
+import { fieldsSimple, fieldsStages, fieldsHidden, singleStage } from './DynamicFieldsExamples'
+import { nextTick } from 'vue'
+import { defineRule, configure } from 'vee-validate'
 
 describe('DynamicFields', () => {
   describe('Fields', () => {
@@ -175,16 +179,79 @@ describe('DynamicFields', () => {
       })
     })
 
-    it('emits the stage when progressing/regressing', async () => {})
+    it('emits the stage when progressing', async () => {
+      const field = fieldsStages.filter((field) => field.type === 'text' && field.stage === 0)[0]
+      const input = wrapper.find(`input[type="text"]#${field.identifier}`)
+      expect(input.exists()).toBe(true)
+      await input.setValue('Name')
 
-    it('emits when form has been completed', async () => {})
+      const primaryButton = wrapper.find('button#primaryButton')
+      await primaryButton.trigger('click')
+
+      const events = wrapper.emitted()
+      expect(events).toHaveProperty('stage')
+      expect(events['stage'][0][0]).toEqual(1)
+    })
+
+    it('emits the stage when repgressing', async () => {
+      const field = fieldsStages.filter((field) => field.type === 'text' && field.stage === 0)[0]
+      const input = wrapper.find(`input[type="text"]#${field.identifier}`)
+      expect(input.exists()).toBe(true)
+      await input.setValue('Name')
+
+      const primaryButton = wrapper.find('button#primaryButton')
+      await primaryButton.trigger('click')
+
+      const stageValue = wrapper.vm.stage
+      expect(stageValue).toBe(1)
+
+      const secondaryButton = wrapper.find('button#secondaryButton')
+      await secondaryButton.trigger('click')
+
+      const events = wrapper.emitted()
+      expect(events).toHaveProperty('stage')
+      expect(events['stage'][1][0]).toEqual(0)
+    })
+
+    it('emits when form has been completed', async () => {
+      const field = fieldsStages.filter((field) => field.type === 'text' && field.stage === 0)[0]
+      const input = wrapper.find(`input[type="text"]#${field.identifier}`)
+      expect(input.exists()).toBe(true)
+      await input.setValue('Name')
+
+      const primaryButton = wrapper.find('button#primaryButton')
+      await primaryButton.trigger('click')
+
+      const field2 = fieldsStages.filter((field) => field.type === 'text' && field.stage === 1)[0]
+      const input2 = wrapper.find(`input[type="text"]#${field2.identifier}`)
+      expect(input2.exists()).toBe(true)
+      await input2.setValue('Name')
+
+      const primaryButton2 = wrapper.find('button#primaryButton')
+      await primaryButton2.trigger('click')
+
+      const events = wrapper.emitted()
+      expect(events).toHaveProperty('completed')
+    })
   })
 
   // describe('Validation', () => {
-  //   it('displays validation errors on submit', () => {})
-  //   it('does not display validation errors before submit', () => {})
-  //   it('does not break when no field validations are provided', () => {})
-  //   it('does not require validation for dependant field when not required', () => {})
-  //   it('correctly requires validation for dependant field when required', () => {})
+  //   let wrapper
+
+  //   beforeEach(() => {
+  //     const app = createApp({})
+  //     app.use(i18n)
+
+  //     wrapper = mount(DynamicFields, {
+  //       props: { fields: singleStage },
+  //       global: {
+  //         plugins: [i18n]
+  //       }
+  //     })
+  //   })
+
+  // it('displays validation errors on submit', async () => {})
+
+  // it('does not display validation errors before submit', () => {})
   // })
 })
