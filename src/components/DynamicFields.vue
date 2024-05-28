@@ -16,6 +16,7 @@
         />
         <Field
           :name="field.identifier"
+          :type="field.type"
           v-slot="{ field: slotField, errors }"
           :id="field.identifier"
         >
