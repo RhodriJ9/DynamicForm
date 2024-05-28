@@ -47,7 +47,7 @@ export default defineComponent({
           this.t('validation.required', { field: this.t('fields.choiceOfService') })
         ),
         specifyOtherService: Yup.string().required(
-          this.t('validation.required', { field: this.t('fields.specifyOtherService') })
+          this.t('fields.specifyOtherService')
         ),
         dateOfBirth: Yup.date()
           .transform((value, originalValue) => (originalValue === '' ? null : value))
